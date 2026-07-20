@@ -62,7 +62,9 @@ export const login = async (
     const token = generateToken(employee._id.toString());
 
     // Store JWT in HTTP-only cookie
-    const isProduction = process.env.NODE_ENV === "production";
+    const isProduction = process.env.FRONTEND_URL?.startsWith(
+    "https://"
+  ) ?? false;
     res.cookie("token", token, {
       httpOnly: true,
       secure: isProduction,
@@ -101,7 +103,9 @@ export const logout = async (
   _req: Request,
   res: Response
 ): Promise<void> => {
-  const isProduction = process.env.NODE_ENV === "production";
+  const isProduction = process.env.FRONTEND_URL?.startsWith(
+    "https://"
+  ) ?? false;
 
   res.clearCookie("token", {
     httpOnly: true,
