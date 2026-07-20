@@ -21,6 +21,8 @@ import type { DashboardStats } from "../types";
 const Dashboard = () => {
   const { user } = useAuth();
 
+  const canViewOrganizationStats = user?.role === "SUPER_ADMIN" || user?.role === "HR_MANAGER";
+
   const [stats, setStats] =
     useState<DashboardStats | null>(null);
 
@@ -31,6 +33,13 @@ const Dashboard = () => {
     useState("");
 
   useEffect(() => {
+    if(!user){
+      return
+    }
+    if(user.role !== "SUPER_ADMIN" && user.role !== "HR_MANAGER"){
+      setLoading(false);
+      return;
+    }
     const fetchDashboardStats = async () => {
       try {
         setLoading(true);
@@ -51,7 +60,7 @@ const Dashboard = () => {
     };
 
     fetchDashboardStats();
-  }, []);
+  }, [user]);
 
   if (loading) {
     return (
@@ -64,6 +73,28 @@ const Dashboard = () => {
 
           <p className="mt-4 text-sm text-slate-500 dark:text-slate-400">
             Loading dashboard...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if(!canViewOrganizationStats){
+    return(
+      <div className="space-y-8">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-3xl">
+            Dashboard
+          </h1>
+          <p className="mt-2 text-slate-500 dark:text-slate-400">Welcome back, {user?.name}.</p>
+        </div>
+        <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+            Welcome to Employee Management System
+          </h2>
+          <p className="mt-3 text-slate-500 dark:text-slate-400">
+            You can view and manage your personal
+            information from the My Profile section.
           </p>
         </div>
       </div>
