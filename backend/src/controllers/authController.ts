@@ -62,10 +62,11 @@ export const login = async (
     const token = generateToken(employee._id.toString());
 
     // Store JWT in HTTP-only cookie
+    const isProduction = process.env.NODE_ENV === "production";
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
+      secure: isProduction,
+      sameSite: isProduction ? "none" : "lax",
       maxAge: 24 * 60 * 60 * 1000,
     });
 
@@ -95,14 +96,17 @@ export const login = async (
 };
 
 // Logout
+
 export const logout = async (
   _req: Request,
   res: Response
 ): Promise<void> => {
+  const isProduction = process.env.NODE_ENV === "production";
+
   res.clearCookie("token", {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
+    secure: isProduction,
+    sameSite: isProduction ? "none" : "lax",
   });
 
   res.status(200).json({
