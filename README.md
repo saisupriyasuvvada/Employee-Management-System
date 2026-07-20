@@ -28,6 +28,32 @@ https://employee-management-system-gao1.onrender.com
 - Dark mode support
 - Protected frontend and backend routes
 
+## Screenshots
+
+### Login Page
+
+![Login Page](screenshots/login.png)
+
+### Dashboard
+
+![Dashboard](screenshots/dashboard.png)
+
+### Employee Management
+
+![Employee Management](screenshots/employees.png)
+
+### Employee Details
+
+![Employee Details](screenshots/employee-details.png)
+
+### Organization Hierarchy
+
+![Organization Hierarchy](screenshots/organization.png)
+
+### My Profile
+
+![My Profile](screenshots/profile.png)
+
 ## User Roles
 
 ### Super Admin
