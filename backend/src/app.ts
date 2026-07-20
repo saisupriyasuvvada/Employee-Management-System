@@ -30,6 +30,11 @@ app.use(
         return;
       }
 
+      console.log(
+        "Blocked by CORS:",
+        origin
+      );
+
       callback(
         new Error(
           "Not allowed by CORS"
